@@ -1,7 +1,5 @@
-use crate::database::parser::Token::Identifier;
 use crate::database::query::Identifier;
-use crate::error::ParserError;
-use crate::error::ParserError::ParseSelectError;
+use crate::error::Error;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Token {
@@ -38,10 +36,10 @@ impl Parser {
     }
 
     pub fn parse(&mut self) -> ASTNode {
-        self.parse_select_statement()
+
     }
 
-    pub fn parse_select_statement(&mut self) -> Result<ASTNode, ParserError> {
+    pub fn parse_select_statement(&mut self) -> Result<ASTNode, Error> {
         let mut projection = Vec::new();
         let mut table: Identifier = Identifier("".to_string());
         if self.next_token() == Token::Keyword("SELECT".to_string()) {
@@ -56,7 +54,7 @@ impl Parser {
             if let Token::Identifier(identifier) = self.next_token() {
                 table = Identifier(identifier);
             } else {
-                return Err(ParseSelectError("no table name provided".to_string()))
+                return Err(Error::ParseError("More words are needed after FROM keyword".to_string()))
             }
         }
         Ok(

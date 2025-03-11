@@ -8,14 +8,15 @@ pub enum Error {
 
     #[error("Bincode Serialize and Deserialize Error: {0}")]
     BincodeError(#[from] bincode::Error),
+
+    #[error("parsing error")]
+    ParseError(String),
+
+    #[error("execution error")]
+    ExecutionError(#[from] ExecutionError)
 }
 
-pub enum ParserError {
-    ParseSelectError(String),
-
-}
-
-pub enum StorageEngineError {
-    IOError(String),
-
+pub enum ExecutionError{
+    #[error("read error")]
+    ReadError(String)
 }

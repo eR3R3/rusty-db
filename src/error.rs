@@ -1,7 +1,7 @@
 use thiserror::Error;
 use std::io;
 
-#[derive(Error)]
+#[derive(Error, Debug)]
 pub enum Error {
     #[error("IO Error: {0}")]
     IO(#[from] io::Error),
@@ -16,6 +16,7 @@ pub enum Error {
     ExecutionError(#[from] ExecutionError)
 }
 
+#[derive(Error, Debug)]
 pub enum ExecutionError{
     #[error("read error")]
     ReadError(String)

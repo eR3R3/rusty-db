@@ -6,7 +6,6 @@ use crate::database::schema::{Row, Table};
 use bincode;
 use std::io::{ErrorKind, Read};
 use crate::error::Error;
-use crate::error::StorageEngineError::IOError;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Eq)]
 pub struct StorageEngine {
@@ -60,7 +59,7 @@ impl FileSystem {
     fn new(file_path: &str) -> Result<Self, Error> {
         let file_path = PathBuf::from(file_path);
         let mut storage_engine = StorageEngine::new();
-        if &file_path.exists() {
+        if file_path.exists() {
             if let Ok(tables) = FileSystem::read_from_file(file_path
                 .to_str()
                 .ok_or(Error::IO(std::io::Error::new(ErrorKind::InvalidData, "invalid data received from file")))?) {

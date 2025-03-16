@@ -30,14 +30,14 @@ pub struct Parser {
 impl Parser {
     pub fn new(token: Vec<Token>) -> Self {
         Parser {
-            tokens,
+            tokens: token,
             current: 0,
         }
     }
 
-    pub fn parse(&mut self) -> ASTNode {
-
-    }
+    // pub fn parse(&mut self) -> ASTNode {
+    //
+    // }
 
     pub fn parse_select_statement(&mut self) -> Result<ASTNode, Error> {
         let mut projection = Vec::new();
